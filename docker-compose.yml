@@ -1,0 +1,32 @@
+version: '2'
+
+services:
+  nginx:
+    container_name: web
+    build: ./dockerfiles/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - php-fpm
+
+  php-fpm:
+    container_name: php-fpm
+    build: ./dockerfiles/php-fpm
+    volumes:
+      - ./src/laravel:/var/www/laravel
+
+  mysql:
+    container_name: db
+    build:
+      context: ./dockerfiles/mysql
+      args:
+        - MYSQL_DATABASE=laravel
+        - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes_from:
+      - storage
+    ports:
+      - "3306:3306"
+
+  storage:
+    build: ./dockerfiles/storage
