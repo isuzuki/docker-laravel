@@ -28,5 +28,13 @@ services:
     ports:
       - "3306:3306"
 
+  memcached:
+    container_name: memcached
+    build: ./dockerfiles/memcached
+    volumes_from:
+      - storage
+    ports:
+      - "11211:11211"
+
   storage:
     build: ./dockerfiles/storage
