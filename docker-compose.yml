@@ -9,6 +9,8 @@ services:
       - "443:443"
     links:
       - php-fpm
+    volumes_from:
+      - php-fpm
 
   php-fpm:
     container_name: php-fpm
