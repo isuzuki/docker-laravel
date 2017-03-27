@@ -29,3 +29,8 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
     && rm -r memcached \
     && rm /tmp/memcached.tar.gz \
     && docker-php-ext-enable memcached
+
+RUN mkdir /var/run/php-fpm
+
+ADD ./zz-app.conf /usr/local/etc/php-fpm.d/
+ADD ./zz-docker.conf /usr/local/etc/php-fpm.d/

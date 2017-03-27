@@ -16,6 +16,7 @@ services:
     container_name: php-fpm
     build: ./dockerfiles/php-fpm
     volumes:
+      - /var/run
       - ./src/laravel:/var/www/laravel
 
   mysql:
