@@ -15,6 +15,11 @@ RUN apk update && apk upgrade \
 
 RUN docker-php-ext-install pdo_mysql mysqli
 
+# Install composer and prestissimo
+RUN curl -s http://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer && \
+    composer global require hirak/prestissimo
+
 # Install the php memcached extension
 RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
     && mkdir -p memcached \
