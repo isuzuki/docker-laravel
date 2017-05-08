@@ -41,3 +41,6 @@ services:
 
   storage:
     build: ./dockerfiles/storage
+
+  selenium:
+    image: selenium/standalone-chrome:latest
