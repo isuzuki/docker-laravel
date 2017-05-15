@@ -35,6 +35,13 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
     && rm /tmp/memcached.tar.gz \
     && docker-php-ext-enable memcached
 
+# Install Blackfire Probe
+# @see https://blackfire.io
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+    && curl -A "Docker" -o /tmp/blackfire.so -D - -L -s https://packages.blackfire.io/binaries/blackfire-php/1.16.2/blackfire-php-alpine_amd64-php-$version.so \
+    && mv /tmp/blackfire.so $(php -r "echo ini_get('extension_dir');")/blackfire.so \
+    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8707\n" > $PHP_INI_DIR/conf.d/blackfire.ini
+
 RUN mkdir /var/run/php-fpm
 
 ADD ./zz-app.conf /usr/local/etc/php-fpm.d/
